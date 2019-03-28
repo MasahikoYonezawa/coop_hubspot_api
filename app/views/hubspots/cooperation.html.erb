@@ -1,0 +1,31 @@
+<h1>連絡先</h1>
+<% @contact_properties.each do |cp_val| %>
+  <div>
+    <div><%= cp_val %></div><br>
+  </div>
+<% end %>
+<br><br>
+<!--<= link_to "POST", hubspots_post_contact_properties_path, method: :post %>-->
+<!--<h1>会社</h1>-->
+<!--< @companies.each do |cp| %>-->
+<!--  <div>-->
+<!--      domain：<= cp["domain"] %>-->
+<!--    name：<= cp["name"] %>-->
+<!--  </div>-->
+<!--< end %>-->
+<!--<= @contacts %>-->
+<br><br>
+<!--<= @contact_properties %>-->
+<br><br>
+<%= form_tag("/hubspots/post_contact_properties", method: "post") do %>
+  <%= label_tag(:line_uid, "Line_uid:") %>
+  <%= text_field_tag(:line_uid) %>
+  <!--<= label_tag(:item_code, "Item_code:") %>-->
+  <!--<= text_field_tag(:item_code) %>-->
+  <!--<= label_tag(:member_id, "Member_id:") %>-->
+  <!--<= text_field_tag(:member_id) %>-->
+  <%= submit_tag("Post") %>
+<% end %>
+
+
+
