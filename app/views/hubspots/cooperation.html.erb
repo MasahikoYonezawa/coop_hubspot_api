@@ -1,7 +1,7 @@
 <h1>連絡先</h1>
-<% @contact_properties.each do |cp_val| %>
+<% @contact_properties.each do |cp_key, cp_val| %>
   <div>
-    <div><%= cp_val %></div><br>
+    <div><%= cp_val["firstname"] %></div><br>
   </div>
 <% end %>
 <br><br>
@@ -17,14 +17,14 @@
 <br><br>
 <!--<= @contact_properties %>-->
 <br><br>
-<%= form_tag("/hubspots/post_contact_properties", method: "post") do %>
+<%= form_tag(hubspots_show_contact_properties_path, method: "get") do %>
   <%= label_tag(:line_uid, "Line_uid:") %>
   <%= text_field_tag(:line_uid) %>
-  <!--<= label_tag(:item_code, "Item_code:") %>-->
-  <!--<= text_field_tag(:item_code) %>-->
-  <!--<= label_tag(:member_id, "Member_id:") %>-->
-  <!--<= text_field_tag(:member_id) %>-->
-  <%= submit_tag("Post") %>
+  <%= label_tag(:item_code, "Item_code:") %>
+  <%= text_field_tag(:item_code) %>
+  <%= label_tag(:member_id, "Member_id:") %>
+  <%= text_field_tag(:member_id) %>
+  <%= submit_tag("送信") %>
 <% end %>
 
 

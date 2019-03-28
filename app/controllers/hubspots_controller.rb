@@ -1,5 +1,5 @@
 class HubspotsController < ApplicationController
-  require 'net/http'
+  require 'net/https'
   require 'uri'
   require 'json'
 
@@ -19,9 +19,65 @@ class HubspotsController < ApplicationController
         "item_name" => "メールテスト",
         "member_meta" => [ cp_val ]
       }.to_json
-      p data
     end
     
+  end
+  
+  def show_contact_properties
+    @contacts = Hubspot::Contact.all
+    @contact_properties = {}
+    i = 0
+    @contacts.each do |c|
+      @contact_properties[i] = Hubspot::Contact.find_by_id(c.vid).properties
+      i = i + 1
+    end
+    
+    @contact_properties.each do |cp_key, cp_val|
+      p cp_val["line_uid"]
+      p cp_val["item_code"]
+      if cp_val["line_uid"] == params[:line_uid] && cp_val["item_code"] == params[:item_code]
+        @results = cp_val
+      elsif cp_val["member_id"] == params[:member_id]
+        @results = cp_val
+      else
+        @results = "データ無し"
+      end
+    end
+  end
+  
+  def get_contact_properties
+    @contacts = Hubspot::Contact.all
+    @contact_properties = {}
+    i = 0
+    @contacts.each do |c|
+      @contact_properties[i] = Hubspot::Contact.find_by_id(c.vid).properties
+      i = i + 1
+    end
+    
+    item_code = ""
+    line_id = ""
+    member_id = ""
+    data = ""
+    
+    @contact_properties.each do |cp_key, cp_val|
+      if cp_val["line_uid"] == params[:line_uid] && cp_val["item_code"] == params[:item_code]
+        item_code = cp_val["item_code"]
+        line_id = cp_val["line_uid"]
+        data = [cp_val]
+      elsif cp_val["member_id"] == params[:member_id]
+        member_id = cp_val["member_id"]
+        data = [cp_val]
+      end
+    end
+    if data.blank?
+      render json: {status: 'ERROR', data: "NO DATA"}
+    else
+      if member_id.blank?
+        render json: {item_code: item_code, line_id: line_id, member_meta: data}
+      else
+        render json: {member_id: member_id, member_meta: data}
+      end
+    end
   end
   
   def post_contact_properties
@@ -253,4 +309,6 @@ class HubspotsController < ApplicationController
     
     puts res.code, res.msg, res.body
   end
+  
+  
 end
