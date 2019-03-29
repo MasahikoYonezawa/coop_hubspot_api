@@ -3,5 +3,4 @@ Rails.application.routes.draw do
   get 'hubspots/cooperation', to: 'hubspots#cooperation'
   get 'hubspots/get_contact_properties', to: 'hubspots#get_contact_properties'
   get 'hubspots/show_contact_properties', to: 'hubspots#show_contact_properties'
-  # resources :hubspots
 end

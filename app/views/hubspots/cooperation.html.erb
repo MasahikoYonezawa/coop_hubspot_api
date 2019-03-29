@@ -4,18 +4,7 @@
     <div><%= cp_val["firstname"] %></div><br>
   </div>
 <% end %>
-<br><br>
-<!--<= link_to "POST", hubspots_post_contact_properties_path, method: :post %>-->
-<!--<h1>会社</h1>-->
-<!--< @companies.each do |cp| %>-->
-<!--  <div>-->
-<!--      domain：<= cp["domain"] %>-->
-<!--    name：<= cp["name"] %>-->
-<!--  </div>-->
-<!--< end %>-->
-<!--<= @contacts %>-->
-<br><br>
-<!--<= @contact_properties %>-->
+
 <br><br>
 <%= form_tag(hubspots_show_contact_properties_path, method: "get") do %>
   <%= label_tag(:line_uid, "Line_uid:") %>
